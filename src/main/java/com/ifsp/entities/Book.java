@@ -1,0 +1,57 @@
+package com.ifsp.entities;
+
+import com.ifsp.interfaces.Listable;
+
+public class Book implements Listable {
+	private int id;
+	private int puId;
+	private int auId;
+	private String title;
+	private String author;
+	private Double price;
+	private String publisher;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getPuId() {
+		return puId;
+	}
+	public void setPuId(int puId) {
+		this.puId = puId;
+	}
+	public int getAuId() {
+		return auId;
+	}
+	public void setAuId(int auId) {
+		this.auId = auId;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+}
