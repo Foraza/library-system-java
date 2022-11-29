@@ -1,5 +1,6 @@
 package com.ifsp.interfaces;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ifsp.connections.DBConnection;
@@ -9,11 +10,11 @@ public interface DAOInterface {
 			
 	public void add(Listable item);
 	
-	public Listable get(int id);
+	public Listable get(int id) throws SQLException;
 	
-	public List<Listable> getAll();
+	public List<Listable> getAll() throws SQLException;
 	
-	public void remove(int id);
+	public String remove(int id);
 	
 	public void update(Listable item);
 }

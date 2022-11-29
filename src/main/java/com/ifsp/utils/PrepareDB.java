@@ -9,7 +9,7 @@ public class PrepareDB {
 	private static DBConnection DB = new DBConnection();
 	private static Connection conn = DB.getConnection();
 	
-	public static void createTables() {
+	public static String createTables() {
 		
 		// client
         try (Statement stmt = conn.createStatement()) {
@@ -79,7 +79,7 @@ public class PrepareDB {
         // shippinginfo
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS shippinginfo ("
+                    "CREATE TABLE IF NOT EXISTS shipping_info ("
                     + "shipper VARCHAR(50),"
                     + "address VARCHAR(50))"
                     + "ENGINE=InnoDB;");
@@ -90,7 +90,7 @@ public class PrepareDB {
         // billinginfo
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS billinginfo ("
+                    "CREATE TABLE IF NOT EXISTS billing_info ("
                     + "email VARCHAR(50),"
                     + "payment VARCHAR(50))"
                     + "ENGINE=InnoDB;");
@@ -103,7 +103,7 @@ public class PrepareDB {
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS order ("
                     + "id INT PRIMARY KEY AUTO_INCREMENT,"
-                    + "date DATETIME"
+                    + "date DATETIME,"
                     + "fkclid INT,"
                     + "address VARCHAR(50),"
                     + "payment VARCHAR(50),"
@@ -117,9 +117,9 @@ public class PrepareDB {
         // order itens
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS orderitens ("
-                    + "fkorid," //id da venda
-                    + "fkboid," //id do livro
+                    "CREATE TABLE IF NOT EXISTS order_itens ("
+                    + "fkorid INT," //id da venda
+                    + "fkboid INT," //id do livro
                     + "quantity INT,"
                     + "CONSTRAINT FK_orid FOREIGN KEY (fkorid)"
                     + " REFERENCES order(id),"
@@ -129,5 +129,7 @@ public class PrepareDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        return "Tabelas criadas!";
 	}
 }

@@ -4,14 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
-import com.ifsp.connections.BookDAO;
+import com.ifsp.connections.ClientDAO;
 import com.ifsp.interfaces.Listable;
 
-@Service
-public class BookService {
-	BookDAO DAO = new BookDAO();
+public class ClientService {
+ClientDAO DAO = new ClientDAO();
 	
 	public ResponseEntity<List<Listable>> findAll() throws SQLException{
 		return ResponseEntity.ok(DAO.getAll());
