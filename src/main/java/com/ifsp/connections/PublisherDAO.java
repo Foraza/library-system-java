@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ifsp.entities.Client;
+import com.ifsp.entities.Publisher;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
-public class ClientDAO implements DAOInterface{
+public class PublisherDAO implements DAOInterface{
 	private Connection conn = new DBConnection().getConnection();
 
 	@Override
@@ -22,7 +23,7 @@ public class ClientDAO implements DAOInterface{
 
 	@Override
 	public Listable get(int id) throws SQLException {
-		String sql="SELECT * from client WHERE id = " + id;       //cria a string do sql
+		String sql="SELECT * from publisher WHERE id = " + id;       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         ResultSet rs = null; //criar o resultSet, uma lista especializada para receber dados SQL
@@ -37,7 +38,7 @@ public class ClientDAO implements DAOInterface{
 		}
 		
         rs.next();
-        Client aux = new Client();
+        Publisher aux = new Publisher();
     	aux.setId(rs.getInt("id"));
     	aux.setName(rs.getString("name"));
     	
@@ -47,8 +48,8 @@ public class ClientDAO implements DAOInterface{
 
 	@Override
 	public List<Listable> getAll() throws SQLException {
-		List<Listable> clients = new ArrayList<>();
-		String sql="Select * from client";       //cria a string do sql
+		List<Listable> publishers = new ArrayList<>();
+		String sql="Select * from publisher";       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         ResultSet rs = null; //criar o resultSet, uma lista especializada para receber dados SQL
@@ -62,14 +63,14 @@ public class ClientDAO implements DAOInterface{
 		}
 		
         while(rs.next()) {
-        	Client aux = new Client();
+        	Publisher aux = new Publisher();
         	aux.setId(rs.getInt("id"));
         	aux.setName(rs.getString("name"));
         	
-        	clients.add(aux);
+        	publishers.add(aux);
         }
         
-		return clients;
+		return publishers;
 	}
 
 	@Override
@@ -83,5 +84,4 @@ public class ClientDAO implements DAOInterface{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

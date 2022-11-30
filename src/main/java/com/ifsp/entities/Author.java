@@ -1,6 +1,8 @@
 package com.ifsp.entities;
 
-public class Author {
+import com.ifsp.interfaces.Listable;
+
+public class Author implements Listable{
 	private int id;
 	private String name;
 	

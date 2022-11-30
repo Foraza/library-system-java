@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.ifsp.connections.ClientDAO;
+import com.ifsp.connections.AuthorDAO;
 import com.ifsp.interfaces.Listable;
 
 @Service
-public class ClientService {
-	ClientDAO DAO = new ClientDAO();
+public class AuthorService {
+	AuthorDAO DAO = new AuthorDAO();
 	
 	public ResponseEntity<List<Listable>> findAll() throws SQLException{
 		return ResponseEntity.ok(DAO.getAll());

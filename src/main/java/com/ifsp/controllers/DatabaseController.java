@@ -15,4 +15,11 @@ public class DatabaseController {
 		
 		return ResponseEntity.ok(msg);
 	}
+	
+	@GetMapping(value="populate")
+	public ResponseEntity<String> populate(){
+		String msg = PrepareDB.populate();
+		
+		return ResponseEntity.ok(msg);
+	}
 }

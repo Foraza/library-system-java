@@ -1,6 +1,8 @@
 package com.ifsp.entities;
 
-public class Publisher {
+import com.ifsp.interfaces.Listable;
+
+public class Publisher implements Listable{
 	private int id;
 	private String name;
 	private String address;
