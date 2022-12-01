@@ -8,13 +8,13 @@ import com.ifsp.connections.DBConnection;
 public interface DAOInterface {
 	public final static DBConnection conn = new DBConnection();
 			
-	public void add(Listable item);
+	public String add(Listable item) throws SQLException;
 	
 	public Listable get(int id) throws SQLException;
 	
 	public List<Listable> getAll() throws SQLException;
 	
-	public String remove(int id);
+	public String remove(int id) throws SQLException;
 	
-	public void update(Listable item);
+	public String update(int id, Listable item) throws SQLException;
 }

@@ -15,8 +15,8 @@ public class ClientDAO implements DAOInterface{
 	private Connection conn = new DBConnection().getConnection();
 
 	@Override
-	public void add(Listable item) {
-		// TODO Auto-generated method stub
+	public String add(Listable item) {
+		return null;
 		
 	}
 

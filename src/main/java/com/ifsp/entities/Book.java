@@ -9,7 +9,6 @@ public class Book implements Listable {
 	private String title;
 	private String author;
 	private Double price;
-	private String publisher;
 	
 	public int getId() {
 		return id;
@@ -46,12 +45,6 @@ public class Book implements Listable {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
-	}
-	public String getPublisher() {
-		return publisher;
-	}
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
 	}
 
 }
