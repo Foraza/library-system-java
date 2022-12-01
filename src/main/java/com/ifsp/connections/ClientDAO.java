@@ -79,9 +79,9 @@ public class ClientDAO implements DAOInterface{
 	}
 
 	@Override
-	public void update(Listable item) {
+	public String update(int id, Listable item) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
