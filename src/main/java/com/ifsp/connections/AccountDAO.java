@@ -7,19 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ifsp.entities.Author;
-import com.ifsp.entities.Client;
+import com.ifsp.entities.Account;
+import com.ifsp.entities.Account;
+import com.ifsp.entities.Account;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
-public class ClientDAO implements DAOInterface{
+public class AccountDAO implements DAOInterface{
 	private Connection conn = new DBConnection().getConnection();
 
 	@Override
-	public String add(Listable item) {
-		String sql="INSERT INTO client(id, name) VALUES ("
-				+ ((Client) item).getId() + ","				
-				+ "'" + ((Client) item).getName() + "'" + ");";
+	public String add(Listable item) throws SQLException {
+		String sql="INSERT INTO account(id, email, password) VALUES ("
+				+ ((Account) item).getId() + ","
+				+ "'" + ((Account) item).getEmail() + "',"
+				+ "'" + ((Account) item).getPassword() + "'" + ");";
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         
@@ -27,18 +29,17 @@ public class ClientDAO implements DAOInterface{
         	System.out.println(sql);
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
             ps.executeQuery(); //execute consulta 
-            return "Cliente adicionado com sucesso";
+            return "Conta adicionada com sucesso";
             
         } catch (SQLException e) {
 			e.printStackTrace();
-			return "Fala ao adicionar cliente";
+			return "Falha ao adicionar conta";
 		}
-		
 	}
 
 	@Override
 	public Listable get(int id) throws SQLException {
-		String sql="SELECT * from client WHERE id = " + id;       //cria a string do sql
+		String sql="SELECT * from account WHERE id = " + id;       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         ResultSet rs = null; //criar o resultSet, uma lista especializada para receber dados SQL
@@ -53,18 +54,17 @@ public class ClientDAO implements DAOInterface{
 		}
 		
         rs.next();
-        Client aux = new Client();
+        Account aux = new Account();
     	aux.setId(rs.getInt("id"));
-    	aux.setName(rs.getString("name"));
+    	aux.setEmail(rs.getString("email"));
     	
-		
 		return aux;
 	}
 
 	@Override
 	public List<Listable> getAll() throws SQLException {
-		List<Listable> clients = new ArrayList<>();
-		String sql="Select * from client";       //cria a string do sql
+		List<Listable> accounts = new ArrayList<>();
+		String sql="Select * from account";       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         ResultSet rs = null; //criar o resultSet, uma lista especializada para receber dados SQL
@@ -78,19 +78,19 @@ public class ClientDAO implements DAOInterface{
 		}
 		
         while(rs.next()) {
-        	Client aux = new Client();
+        	Account aux = new Account();
         	aux.setId(rs.getInt("id"));
-        	aux.setName(rs.getString("name"));
+        	aux.setEmail(rs.getString("email"));
         	
-        	clients.add(aux);
+        	accounts.add(aux);
         }
         
-		return clients;
+		return accounts;
 	}
 
 	@Override
-	public String remove(int id) {
-		String sql="DELETE from client WHERE id = " + id;       //cria a string do sql
+	public String remove(int id) throws SQLException {
+		String sql="DELETE from account WHERE id = " + id;       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         
@@ -98,18 +98,18 @@ public class ClientDAO implements DAOInterface{
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
             ps.executeQuery(); //execute consulta 
             
-            return "Cliente removido com sucesso!";
+            return "Conta removida com sucesso!";
  
         } catch (SQLException e) {
 			e.printStackTrace();
 			
-			return "Falha ao remover cliente";
+			return "Falha ao remover conta";
 		}
 	}
 
 	@Override
 	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM client WHERE id = " + id;
+		String sql = "SELECT * FROM account WHERE id = " + id;
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -123,21 +123,23 @@ public class ClientDAO implements DAOInterface{
 			e.printStackTrace();
 		}
 		
-		String newName = ((Client) item).getName() != null ? ((Client) item).getName() : rs.getString("name");
+		String newEmail = ((Account) item).getEmail() != null ? ((Account) item).getEmail() : rs.getString("email");
+		String newPassword = ((Account) item).getPassword() != null ? ((Account) item).getPassword() : rs.getString("password");
 		
-		sql = "UPDATE client SET "
-				+ "name = '" + newName + "' "				
+		sql = "UPDATE account SET "
+				+ "email = '" + newEmail + "',"
+				+ "password = '" + newPassword+ "' "
 			+ "WHERE id = " + id + ";";
         
         try {
         	System.out.println(sql);
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
             ps.executeQuery(); //execute consulta 
-            return "Cliente alterado com sucesso";
+            return "Conta alterada com sucesso";
             
         } catch (SQLException e) {
 			e.printStackTrace();
-			return "Falha ao alterar o cliente";
+			return "Falha ao alterar a conta";
 		}
 	}
 

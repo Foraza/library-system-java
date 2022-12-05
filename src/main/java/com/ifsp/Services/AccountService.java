@@ -6,14 +6,13 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.ifsp.connections.ClientDAO;
-import com.ifsp.entities.Author;
-import com.ifsp.entities.Client;
+import com.ifsp.connections.AccountDAO;
+import com.ifsp.entities.Account;
 import com.ifsp.interfaces.Listable;
 
 @Service
-public class ClientService {
-	ClientDAO DAO = new ClientDAO();
+public class AccountService {
+	AccountDAO DAO = new AccountDAO();
 	
 	public ResponseEntity<List<Listable>> findAll() throws SQLException{
 		return ResponseEntity.ok(DAO.getAll());
@@ -27,11 +26,11 @@ public class ClientService {
 		return ResponseEntity.ok(DAO.remove(id));
 	}
 	
-	public ResponseEntity<String> add(Client client) throws SQLException{
-		return ResponseEntity.ok(DAO.add(client));
+	public ResponseEntity<String> add(Account account) throws SQLException{
+		return ResponseEntity.ok(DAO.add(account));
 	}
 	
-	public ResponseEntity<String> update(int id, Client client) throws SQLException{
-		return ResponseEntity.ok(DAO.update(id, client));
+	public ResponseEntity<String> update(int id, Account account) throws SQLException{
+		return ResponseEntity.ok(DAO.update(id, account));
 	}
 }

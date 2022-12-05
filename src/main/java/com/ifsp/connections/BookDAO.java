@@ -104,11 +104,10 @@ public class BookDAO implements DAOInterface {
 		String sql="DELETE from books WHERE id = " + id;       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
-        ResultSet rs = null; //criar o resultSet, uma lista especializada para receber dados SQL
         
         try {
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
-            rs = ps.executeQuery(); //execute consulta 
+            ps.executeQuery(); //execute consulta 
             
             return "Livro removido com sucesso!";
  
@@ -138,7 +137,7 @@ public class BookDAO implements DAOInterface {
 		
 		String newTitle = ((Book) item).getTitle() != null ? ((Book) item).getTitle() : rs.getString("title");
 		String newAuthor = ((Book) item).getAuthor() != null ? ((Book) item).getAuthor() : rs.getString("author");
-		Double newPrice = ((Book) item).getPrice() != 0 ? ((Book) item).getPrice() : rs.getDouble("price");
+		Double newPrice = ((Book) item).getPrice() != null ? ((Book) item).getPrice() : rs.getDouble("price");
 		int newPuId = ((Book) item).getPuId() != 0 ? ((Book) item).getPuId() : rs.getInt("fkpuid");
 		int newAuId = ((Book) item).getAuId() != 0 ? ((Book) item).getAuId() : rs.getInt("fkauid");
 		
@@ -147,7 +146,8 @@ public class BookDAO implements DAOInterface {
 				+ "author= '" + newAuthor + "',"
 				+ "price=" + newPrice + ","
 				+ "fkpuid=" + newPuId + ","
-				+ "fkauid=" + newAuId + ";";
+				+ "fkauid=" + newAuId
+			+ " WHERE id = " + id + ";";
         
         try {
         	System.out.println(sql);

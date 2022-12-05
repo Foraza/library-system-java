@@ -1,6 +1,8 @@
 package com.ifsp.entities;
 
-public class Account {
+import com.ifsp.interfaces.Listable;
+
+public class Account  implements Listable{
 	private int id;
 	private String email;
 	private String password;

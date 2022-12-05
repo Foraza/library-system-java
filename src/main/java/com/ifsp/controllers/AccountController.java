@@ -12,40 +12,41 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifsp.Services.AuthorService;
-import com.ifsp.entities.Author;
+import com.ifsp.Services.AccountService;
+import com.ifsp.entities.Account;
+import com.ifsp.entities.Client;
 import com.ifsp.interfaces.Listable;
 
 @RestController
-public class AuthorController {
-private final AuthorService service;
+public class AccountController {
+private final AccountService service;
 	
-	public AuthorController(AuthorService service) {
+	public AccountController(AccountService service) {
 		this.service = service;
 	}
 	
-	@GetMapping(value="/authors")
+	@GetMapping(value="/accounts")
 	public ResponseEntity<List<Listable>> findAll() throws SQLException{
 		return service.findAll();
 	}
 	
-	@GetMapping(value="/authors/{id}")
+	@GetMapping(value="/accounts/{id}")
 	public ResponseEntity<Listable> findById(@PathVariable("id") int id) throws SQLException{
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/authors/{id}")
+	@DeleteMapping(value="/accounts/{id}")
 	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
 		return service.remove(id);	
 	}
 	
-	@PostMapping(value="/authors")
-	public ResponseEntity<String> add(@RequestBody Author author) throws SQLException{
-		return service.add(author);
+	@PostMapping(value="/accounts")
+	public ResponseEntity<String> add(@RequestBody Account account) throws SQLException{
+		return service.add(account);
 	}
 	
-	@PutMapping(value="/authors/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Author author) throws SQLException{
-		return service.update(id, author);
+	@PutMapping(value="/accounts/{id}")
+	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Account account) throws SQLException{
+		return service.update(id, account);
 	}
 }

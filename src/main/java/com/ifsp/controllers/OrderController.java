@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifsp.Services.AuthorService;
-import com.ifsp.entities.Author;
+import com.ifsp.Services.OrderService;
+import com.ifsp.entities.Order;
 import com.ifsp.interfaces.Listable;
 
 @RestController
-public class AuthorController {
-private final AuthorService service;
+public class OrderController {
+	private OrderService service = new OrderService();
 	
-	public AuthorController(AuthorService service) {
+	public OrderController(OrderService service) {
 		this.service = service;
 	}
 	
-	@GetMapping(value="/authors")
+	@GetMapping(value="/orders")
 	public ResponseEntity<List<Listable>> findAll() throws SQLException{
 		return service.findAll();
 	}
 	
-	@GetMapping(value="/authors/{id}")
+	@GetMapping(value="/orders/{id}")
 	public ResponseEntity<Listable> findById(@PathVariable("id") int id) throws SQLException{
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/authors/{id}")
+	@DeleteMapping(value="/orders/{id}")
 	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
 		return service.remove(id);	
 	}
 	
-	@PostMapping(value="/authors")
-	public ResponseEntity<String> add(@RequestBody Author author) throws SQLException{
-		return service.add(author);
+	@PostMapping(value="/orders")
+	public ResponseEntity<String> add(@RequestBody Order order) throws SQLException{
+		return service.add(order);
 	}
 	
-	@PutMapping(value="/authors/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Author author) throws SQLException{
-		return service.update(id, author);
+	@PutMapping(value="/orders/{id}")
+	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Order order) throws SQLException{
+		return service.update(id, order);
 	}
 }

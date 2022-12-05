@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.ifsp.entities.Author;
 import com.ifsp.entities.Client;
+import com.ifsp.entities.Publisher;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
@@ -17,7 +18,22 @@ public class AuthorDAO implements DAOInterface{
 
 	@Override
 	public String add(Listable item) {
-		return null;
+		String sql="INSERT INTO author(id, name) VALUES ("
+				+ ((Author) item).getId() + ","				
+				+ "'" + ((Author) item).getName() + "'" + ");";
+        
+		PreparedStatement ps = null; //Prepara a query e evita sql injection
+        
+        try {
+        	System.out.println(sql);
+            ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
+            ps.executeQuery(); //execute consulta 
+            return "Autor adicionado com sucesso";
+            
+        } catch (SQLException e) {
+			e.printStackTrace();
+			return "Falha ao adicionar o autor";
+		}
 	}
 
 	@Override
@@ -74,14 +90,55 @@ public class AuthorDAO implements DAOInterface{
 
 	@Override
 	public String remove(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql="DELETE from author WHERE id = " + id;       //cria a string do sql
+        
+		PreparedStatement ps = null; //Prepara a query e evita sql injection
+        
+        try {
+            ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
+            ps.executeQuery(); //execute consulta 
+            
+            return "Autor removido com sucesso!";
+ 
+        } catch (SQLException e) {
+			e.printStackTrace();
+			
+			return "Falha ao remover autor";
+		}
 	}
 
 	@Override
 	public String update(int id, Listable item) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM author WHERE id = " + id;
+		
+		PreparedStatement ps = null; //Prepara a query e evita sql injection
+		ResultSet rs = null;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String newName = ((Author) item).getName() != null ? ((Author) item).getName() : rs.getString("name");
+		
+		sql = "UPDATE author SET "
+				+ "name = '" + newName + "' "				
+			+ "WHERE id = " + id + ";";
+        
+        try {
+        	System.out.println(sql);
+            ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
+            ps.executeQuery(); //execute consulta 
+            return "Autor alterado com sucesso";
+            
+        } catch (SQLException e) {
+			e.printStackTrace();
+			return "Falha ao alterar o autor";
+		}
 	}
 
 }

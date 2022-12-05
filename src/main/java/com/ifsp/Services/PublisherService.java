@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ifsp.connections.PublisherDAO;
+import com.ifsp.entities.Publisher;
 import com.ifsp.interfaces.Listable;
 
 @Service
@@ -23,5 +24,13 @@ public class PublisherService {
 	
 	public ResponseEntity<String> remove(int id) throws SQLException{
 		return ResponseEntity.ok(DAO.remove(id));
+	}
+	
+	public ResponseEntity<String> add(Publisher publisher) throws SQLException{
+		return ResponseEntity.ok(DAO.add(publisher));
+	}
+	
+	public ResponseEntity<String> update(int id, Publisher publisher) throws SQLException{
+		return ResponseEntity.ok(DAO.update(id, publisher));
 	}
 }

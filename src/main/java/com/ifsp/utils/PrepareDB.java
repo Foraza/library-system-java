@@ -101,15 +101,15 @@ public class PrepareDB {
         // order
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS order ("
-                    + "id INT PRIMARY KEY AUTO_INCREMENT,"
-                    + "date DATETIME,"
-                    + "fkclid INT,"
-                    + "address VARCHAR(50),"
-                    + "payment VARCHAR(50),"
-                    + "CONSTRAINT FK_clid FOREIGN KEY (fkclid)"
-                    + " REFERENCES client(id))"
-                    + "ENGINE=InnoDB;");
+            		"CREATE TABLE IF NOT EXISTS orders ("
+                            + "id INT PRIMARY KEY AUTO_INCREMENT,"
+                            + "date DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                            + "fkclid INT,"
+                            + "address VARCHAR(50),"
+                            + "payment VARCHAR(50),"
+                            + "CONSTRAINT FK_clid FOREIGN KEY (fkclid)"
+                            + " REFERENCES client(id))"
+                            + "ENGINE=InnoDB;");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,12 +117,12 @@ public class PrepareDB {
         // order itens
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS order_itens ("
+                    "CREATE TABLE IF NOT EXISTS order_items ("
                     + "fkorid INT," //id da venda
                     + "fkboid INT," //id do livro
                     + "quantity INT,"
                     + "CONSTRAINT FK_orid FOREIGN KEY (fkorid)"
-                    + " REFERENCES order(id),"
+                    + " REFERENCES orders(id),"
                     + "CONSTRAINT FK_boid FOREIGN KEY (fkboid)"
                     + " REFERENCES books(id))"
                     + "ENGINE=InnoDB;");
@@ -208,7 +208,7 @@ public class PrepareDB {
             e.printStackTrace();
         }
         
-     // shipping_info
+        // shipping_info
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
                     "insert into shipping_info (shipper, address) values ('Howe-Dach', '25103 Towne Circle'),\r\n"
@@ -220,7 +220,7 @@ public class PrepareDB {
             e.printStackTrace();
         }
         
-     // billing_info
+        // billing_info
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
                     "insert into billing_info (email, payment) values ('cwhiffen0@army.mil', 'paypal'),\r\n"
@@ -230,6 +230,53 @@ public class PrepareDB {
                     + "    ('bdalton4@dailymotion.com', 'ticket');");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+     
+        // orders
+        try (Statement stmt = conn.createStatement()){
+        	stmt.execute(
+        			"insert into orders (date, fkclid, address, payment) values\r\n"
+        			+ "('2022-07-15 08:44:29', 9, '25872 Quincy Way', 'pix'),\r\n"
+        			+ "('2022-11-11 13:57:03', 4, '3 Trailsway Circle', 'credit card'),\r\n"
+        			+ "('2022-08-20 17:29:01', 1, '88 Grover Street', 'money'),\r\n"
+        			+ "('2022-07-20 19:47:06', 7, '557 Pankratz Road', 'money'),\r\n"
+        			+ "('2022-03-07 04:59:09', 2, '690 Holy Cross Crossing', 'ticket'),\r\n"
+        			+ "('2022-10-29 10:58:30', 2, '9 Havey Lane', 'credit card'),\r\n"
+        			+ "('2022-06-09 09:07:11', 4, '4 Monument Pass', 'pix'),\r\n"
+        			+ "('2022-05-07 13:06:31', 3, '90339 Dorton Street', 'money'),\r\n"
+        			+ "('2022-07-20 01:20:48', 5, '7104 Merry Drive', 'credit card'),\r\n"
+        			+ "('2022-09-23 13:26:28', 5, '065 Killdeer Lane', 'pix'),\r\n"
+        			+ "('2022-09-11 00:31:46', 1, '40172 East Lane', 'ticket'),\r\n"
+        			+ "('2022-09-06 13:23:19', 9, '5 Fieldstone Avenue', 'credit card'),\r\n"
+        			+ "('2022-08-26 01:32:30', 1, '9 Beilfuss Road', 'ticket'),\r\n"
+        			+ "('2022-09-14 05:11:04', 5, '64 Holy Cross Junction', 'money'),\r\n"
+        			+ "('2022-06-28 01:28:57', 7, '228 Larry Court', 'ticket');");
+        	
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
+        
+        // order_items
+        try(Statement stmt = conn.createStatement()){
+        	stmt.execute(
+        			"insert into order_items (fkorid, fkboid, quantity) values (2, 5, 14),\r\n"
+        			+ "(4, 1, 9),\r\n"
+        			+ "(11, 4, 12),\r\n"
+        			+ "(6, 6, 5),\r\n"
+        			+ "(9, 6, 11),\r\n"
+        			+ "(7, 5, 7),\r\n"
+        			+ "(5, 2, 1),\r\n"
+        			+ "(12, 4, 3),\r\n"
+        			+ "(3, 6, 8),\r\n"
+        			+ "(1, 1, 6),\r\n"
+        			+ "(13, 4, 2),\r\n"
+        			+ "(10, 2, 9),\r\n"
+        			+ "(10, 5, 12),\r\n"
+        			+ "(9, 1, 5),\r\n"
+        			+ "(12, 6, 1);");
+        	
+        }catch(Exception e) {
+        	e.printStackTrace();
         }
         
         return "Banco de dados povoado";
