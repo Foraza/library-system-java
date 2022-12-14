@@ -34,9 +34,9 @@ public class BookController {
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/books/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/books")
+	public ResponseEntity<String> remove(@RequestBody Book book) throws SQLException{
+		return service.remove(book);	
 	}
 	
 	@PostMapping(value="/books")
@@ -44,8 +44,8 @@ public class BookController {
 		return service.add(book);
 	}
 	
-	@PutMapping(value="/books/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Book book) throws SQLException{
-		return service.update(id, book);
+	@PutMapping(value="/books")
+	public ResponseEntity<String> update(@RequestBody Book book) throws SQLException{
+		return service.update(book);
 	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ifsp.Services.AccountService;
 import com.ifsp.entities.Account;
-import com.ifsp.entities.Client;
 import com.ifsp.interfaces.Listable;
 
 @RestController
@@ -35,9 +34,9 @@ private final AccountService service;
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/accounts/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/accounts")
+	public ResponseEntity<String> remove(@RequestBody Account account) throws SQLException{
+		return service.remove(account);	
 	}
 	
 	@PostMapping(value="/accounts")
@@ -45,8 +44,8 @@ private final AccountService service;
 		return service.add(account);
 	}
 	
-	@PutMapping(value="/accounts/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Account account) throws SQLException{
-		return service.update(id, account);
+	@PutMapping(value="/accounts")
+	public ResponseEntity<String> update(@RequestBody Account account) throws SQLException{
+		return service.update(account);
 	}
 }

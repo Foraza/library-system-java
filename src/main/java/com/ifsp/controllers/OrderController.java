@@ -34,9 +34,9 @@ public class OrderController {
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/orders/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/orders")
+	public ResponseEntity<String> remove(@RequestBody Order order) throws SQLException{
+		return service.remove(order);	
 	}
 	
 	@PostMapping(value="/orders")
@@ -44,8 +44,8 @@ public class OrderController {
 		return service.add(order);
 	}
 	
-	@PutMapping(value="/orders/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Order order) throws SQLException{
-		return service.update(id, order);
+	@PutMapping(value="/orders")
+	public ResponseEntity<String> update(@RequestBody Order order) throws SQLException{
+		return service.update(order);
 	}
 }

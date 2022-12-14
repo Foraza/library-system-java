@@ -1,6 +1,5 @@
 package com.ifsp.connections;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ifsp.entities.Author;
-import com.ifsp.entities.Client;
-import com.ifsp.entities.Publisher;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
 public class AuthorDAO implements DAOInterface{
-	private Connection conn = new DBConnection().getConnection();
 
 	@Override
 	public String add(Listable item) {
@@ -89,8 +85,8 @@ public class AuthorDAO implements DAOInterface{
 	}
 
 	@Override
-	public String remove(int id) {
-		String sql="DELETE from author WHERE id = " + id;       //cria a string do sql
+	public String remove(Listable item) {
+		String sql="DELETE from author WHERE id = " + ((Author) item).getId();       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         
@@ -108,8 +104,8 @@ public class AuthorDAO implements DAOInterface{
 	}
 
 	@Override
-	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM author WHERE id = " + id;
+	public String update(Listable item) throws SQLException {
+		String sql = "SELECT * FROM author WHERE id = " + ((Author) item).getId();
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -127,7 +123,7 @@ public class AuthorDAO implements DAOInterface{
 		
 		sql = "UPDATE author SET "
 				+ "name = '" + newName + "' "				
-			+ "WHERE id = " + id + ";";
+			+ "WHERE id = " + ((Author) item).getId() + ";";
         
         try {
         	System.out.println(sql);

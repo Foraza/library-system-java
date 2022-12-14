@@ -34,9 +34,9 @@ public class PublisherController {
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/publishers/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/publishers")
+	public ResponseEntity<String> remove(@RequestBody Publisher publisher) throws SQLException{
+		return service.remove(publisher);	
 	}
 	
 	@PostMapping(value="/publishers")
@@ -44,9 +44,9 @@ public class PublisherController {
 		return service.add(publisher);
 	}
 	
-	@PutMapping(value="/publishers/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Publisher publisher) throws SQLException{
-		return service.update(id, publisher);
+	@PutMapping(value="/publishers")
+	public ResponseEntity<String> update(@RequestBody Publisher publisher) throws SQLException{
+		return service.update(publisher);
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.ifsp.connections;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ifsp.entities.Account;
-import com.ifsp.entities.Account;
-import com.ifsp.entities.Account;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
 public class AccountDAO implements DAOInterface{
-	private Connection conn = new DBConnection().getConnection();
 
 	@Override
 	public String add(Listable item) throws SQLException {
@@ -89,8 +85,8 @@ public class AccountDAO implements DAOInterface{
 	}
 
 	@Override
-	public String remove(int id) throws SQLException {
-		String sql="DELETE from account WHERE id = " + id;       //cria a string do sql
+	public String remove(Listable item) throws SQLException {
+		String sql="DELETE from account WHERE id = " + ((Account) item).getId();       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         
@@ -108,8 +104,8 @@ public class AccountDAO implements DAOInterface{
 	}
 
 	@Override
-	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM account WHERE id = " + id;
+	public String update(Listable item) throws SQLException {
+		String sql = "SELECT * FROM account WHERE id = " + ((Account) item).getId();
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -129,7 +125,7 @@ public class AccountDAO implements DAOInterface{
 		sql = "UPDATE account SET "
 				+ "email = '" + newEmail + "',"
 				+ "password = '" + newPassword+ "' "
-			+ "WHERE id = " + id + ";";
+			+ "WHERE id = " + ((Account) item).getId() + ";";
         
         try {
         	System.out.println(sql);

@@ -1,20 +1,16 @@
 package com.ifsp.connections;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ifsp.entities.Book;
-import com.ifsp.entities.Client;
 import com.ifsp.entities.Publisher;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
 public class PublisherDAO implements DAOInterface{
-	private Connection conn = new DBConnection().getConnection();
 
 	@Override
 	public String add(Listable item) {
@@ -83,6 +79,7 @@ public class PublisherDAO implements DAOInterface{
         	Publisher aux = new Publisher();
         	aux.setId(rs.getInt("id"));
         	aux.setName(rs.getString("name"));
+        	aux.setAddress(rs.getString("address"));
         	
         	publishers.add(aux);
         }
@@ -91,8 +88,8 @@ public class PublisherDAO implements DAOInterface{
 	}
 
 	@Override
-	public String remove(int id) {
-		String sql="DELETE from publisher WHERE id = " + id;       //cria a string do sql
+	public String remove(Listable item) {
+		String sql="DELETE from publisher WHERE id = " + ((Publisher) item).getId();       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
         
@@ -110,8 +107,8 @@ public class PublisherDAO implements DAOInterface{
 	}
 
 	@Override
-	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM publisher WHERE id = " + id;
+	public String update(Listable item) throws SQLException {
+		String sql = "SELECT * FROM publisher WHERE id = " + ((Publisher) item).getId();
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -131,7 +128,7 @@ public class PublisherDAO implements DAOInterface{
 		sql = "UPDATE publisher SET "
 				+ "name = '" + newName + "', "				
 				+ "address = '" + newAddress + "'"
-			+ "WHERE id = " + id + ";";
+			+ "WHERE id = " + ((Publisher) item).getId() + ";";
         
         try {
         	System.out.println(sql);

@@ -1,7 +1,7 @@
 package com.ifsp.entities;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import com.ifsp.interfaces.Listable;
@@ -9,6 +9,7 @@ import com.ifsp.interfaces.Listable;
 public class Order implements Listable {
 	private int id;
 	private int clId;
+	private Client client;
 	private Date date;
 	private String address;
 	private String payment;
@@ -50,8 +51,13 @@ public class Order implements Listable {
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
 	}
-	
 	public void addBook(OrderItem item) {
 		items.add(item);
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
 	}
 }

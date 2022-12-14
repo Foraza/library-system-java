@@ -1,6 +1,5 @@
 package com.ifsp.connections;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
 public class BookDAO implements DAOInterface {
-	private Connection conn = new DBConnection().getConnection();
 
 	@Override
 	public String add(Listable item) {
@@ -100,10 +98,24 @@ public class BookDAO implements DAOInterface {
 	}
 
 	@Override
-	public String remove(int id) {
-		String sql="DELETE from books WHERE id = " + id;       //cria a string do sql
+	public String remove(Listable item) {
+		String sql="DELETE from order_items WHERE fkboid = " + ((Book) item).getId();       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
+        
+        try {
+            ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
+            ps.executeQuery(); //execute consulta 
+            
+ 
+        } catch (SQLException e) {
+			e.printStackTrace();
+			
+			return "Falha ao remover livro";
+		}
+		
+
+        sql="DELETE from books WHERE id = " + ((Book) item).getId();       //cria a string do sql
         
         try {
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
@@ -120,8 +132,8 @@ public class BookDAO implements DAOInterface {
 	}
 
 	@Override
-	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM books WHERE id = " + id;
+	public String update(Listable item) throws SQLException {
+		String sql = "SELECT * FROM books WHERE id = " + ((Book) item).getId();
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -147,7 +159,7 @@ public class BookDAO implements DAOInterface {
 				+ "price=" + newPrice + ","
 				+ "fkpuid=" + newPuId + ","
 				+ "fkauid=" + newAuId
-			+ " WHERE id = " + id + ";";
+			+ " WHERE id = " + ((Book) item).getId() + ";";
         
         try {
         	System.out.println(sql);

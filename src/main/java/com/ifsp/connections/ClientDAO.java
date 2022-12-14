@@ -1,19 +1,16 @@
 package com.ifsp.connections;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ifsp.entities.Author;
 import com.ifsp.entities.Client;
 import com.ifsp.interfaces.DAOInterface;
 import com.ifsp.interfaces.Listable;
 
 public class ClientDAO implements DAOInterface{
-	private Connection conn = new DBConnection().getConnection();
 
 	@Override
 	public String add(Listable item) {
@@ -89,10 +86,52 @@ public class ClientDAO implements DAOInterface{
 	}
 
 	@Override
-	public String remove(int id) {
-		String sql="DELETE from client WHERE id = " + id;       //cria a string do sql
+	public String remove(Listable item) {
+		String sql="SELECT id from orders WHERE fkclid = " + ((Client) item).getId();       //cria a string do sql
         
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
+		ResultSet rs = null;
+		int orderId;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				orderId = rs.getInt("id");
+				
+				sql = "DELETE FROM order_items WHERE fkorid = " + orderId;
+				
+				try {
+					ps = conn.prepareStatement(sql);
+					ps.executeQuery();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return "Falha ao remover cliente";
+				}
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return "Falha ao remover cliente";
+		}
+		
+		
+		sql="DELETE from orders WHERE fkclid = " + ((Client) item).getId();       //cria a string do sql
+        
+        try {
+            ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
+            ps.executeQuery(); //execute consulta 
+            
+ 
+        } catch (SQLException e) {
+			e.printStackTrace();
+			
+			return "Falha ao remover cliente";
+		}
+		
+		sql="DELETE from client WHERE id = " + ((Client) item).getId();       //cria a string do sql		
         
         try {
             ps = conn.prepareStatement(sql); //obtem a conexao e prepara a estrutura para a string sql
@@ -108,8 +147,8 @@ public class ClientDAO implements DAOInterface{
 	}
 
 	@Override
-	public String update(int id, Listable item) throws SQLException {
-		String sql = "SELECT * FROM client WHERE id = " + id;
+	public String update(Listable item) throws SQLException {
+		String sql = "SELECT * FROM client WHERE id = " + ((Client) item).getId();
 		
 		PreparedStatement ps = null; //Prepara a query e evita sql injection
 		ResultSet rs = null;
@@ -127,7 +166,7 @@ public class ClientDAO implements DAOInterface{
 		
 		sql = "UPDATE client SET "
 				+ "name = '" + newName + "' "				
-			+ "WHERE id = " + id + ";";
+			+ "WHERE id = " + ((Client) item).getId() + ";";
         
         try {
         	System.out.println(sql);

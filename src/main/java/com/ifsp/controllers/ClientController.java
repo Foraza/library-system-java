@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifsp.Services.ClientService;
-import com.ifsp.entities.Author;
 import com.ifsp.entities.Client;
 import com.ifsp.interfaces.Listable;
 
@@ -35,9 +34,9 @@ public class ClientController {
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/clients/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/clients")
+	public ResponseEntity<String> remove(@RequestBody Client client) throws SQLException{
+		return service.remove(client);	
 	}
 	
 	@PostMapping(value="/clients")
@@ -45,8 +44,8 @@ public class ClientController {
 		return service.add(client);
 	}
 	
-	@PutMapping(value="/clients/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Client client) throws SQLException{
-		return service.update(id, client);
+	@PutMapping(value="/clients")
+	public ResponseEntity<String> update(@RequestBody Client client) throws SQLException{
+		return service.update(client);
 	}
 }

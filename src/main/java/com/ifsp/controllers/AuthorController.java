@@ -34,9 +34,9 @@ private final AuthorService service;
 		return service.findById(id);	
 	}
 	
-	@DeleteMapping(value="/authors/{id}")
-	public ResponseEntity<String> remove(@PathVariable("id") int id) throws SQLException{
-		return service.remove(id);	
+	@DeleteMapping(value="/authors")
+	public ResponseEntity<String> remove(@RequestBody Author author) throws SQLException{
+		return service.remove(author);	
 	}
 	
 	@PostMapping(value="/authors")
@@ -44,8 +44,8 @@ private final AuthorService service;
 		return service.add(author);
 	}
 	
-	@PutMapping(value="/authors/{id}")
-	public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody Author author) throws SQLException{
-		return service.update(id, author);
+	@PutMapping(value="/authors")
+	public ResponseEntity<String> update(@RequestBody Author author) throws SQLException{
+		return service.update(author);
 	}
 }
